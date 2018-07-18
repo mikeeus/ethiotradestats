@@ -1,0 +1,4 @@
+<h1>Please reset your password</h1>
+
+<a href="<%= Api::PasswordResets::New.url(@user.id, @token) %>">Reset password</a>
+

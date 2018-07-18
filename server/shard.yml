@@ -1,0 +1,31 @@
+name: ethiostats
+version: 0.1.0
+
+authors:
+  - mikeeus <itsmikias@gmail.com>
+
+targets:
+  ethiostats:
+    main: src/ethiostats.cr
+
+crystal: 0.25.0
+
+dependencies:
+  lucky:
+    github: luckyframework/lucky
+    branch: master
+  lucky_migrator:
+    github: luckyframework/lucky_migrator
+    version: ~> 0.6
+  authentic:
+    github: luckyframework/authentic
+    version: ~> 0.1.0
+  carbon:
+    github: luckyframework/carbon
+    version: ~> 0.1.0
+  jwt:
+    github: crystal-community/jwt
+  progress:
+    github: askn/progress
+  schedule:
+    github: hugoabonizio/schedule.cr

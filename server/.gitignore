@@ -1,0 +1,13 @@
+/docs/
+/lib/
+/.shards/
+*.dwarf
+/node_modules
+yarn-error.log
+/bin/lucky/
+server
+*.dwarf
+*.local.cr
+
+/records/source/imports/*
+/records/source/exports/*

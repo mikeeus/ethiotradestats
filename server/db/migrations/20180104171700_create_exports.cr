@@ -1,0 +1,33 @@
+class CreateExports::V20180104171700 < LuckyMigrator::Migration::V1
+  def migrate
+    create :exports do
+      add_belongs_to hscode : Hscode, on_delete: :cascade
+      add_belongs_to destination : Destination, references: :countries, on_delete: :cascade
+
+      add year : Int32
+      add month : Int32?
+      add cpc : String?
+      add quantity : Int64?
+
+      add mass_gross_kg : Int64?
+      add mass_net_kg : Int64
+      add fob_etb_cents : Int64
+      add fob_usd_cents : Int64
+      add tax_etb_cents : Int64?
+      add tax_usd_cents : Int64?
+
+      add unique_hash : String, unique: true
+    end
+
+    execute "CREATE INDEX ON exports (year, month);"
+    execute "CREATE INDEX ON exports (hscode_id, year, month);"
+    execute "CREATE UNIQUE INDEX unique_export_index
+            ON exports (hscode_id, year, month, cpc,
+                        destination_id,
+                        fob_etb_cents, fob_usd_cents)"
+  end
+
+  def rollback
+    drop :exports
+  end
+end
