@@ -16,25 +16,22 @@ class CountryImporter
         # A row is tab separated string of values
         # eg: KR	35.907757	127.766922	South Korea
         # So we split by "\t" to get an array of values and set our variables
-        short, lat, lon, name = item.to_s.split("\t")
+        short, lat, lon, country_name = item.to_s.split("\t")
 
         # If the country already exists go to the next iteration
-        existing = CountryQuery.new.name(name).first?
+        existing = CountryQuery.new.name(country_name).first?
         if existing
-          db.exec update_aliases(existing)
+          db.exec build_update_aliases_sql existing
           increment_progress
           next
         end
 
-        # postgis sets coordinates using a string in the following form:
-        coordinates = "POINT (#{lon} #{lat})"
-
         # Because Lucky doesn't support Postgresql arrays yet, we will build
         # build our sql statement manually
-        sql = insert_country_sql(name, short, lon, lat)
+        sql = build_insert_sql country_name
 
         # and execute it
-        db.exec sql, name, short, coordinates
+        db.exec sql, country_name, short, "POINT (#{lon} #{lat})"
 
         increment_progress
       end
@@ -42,7 +39,7 @@ class CountryImporter
   end
 
   # Our sql statement
-  private def insert_country_sql(name, short, lon, lat)
+  private def build_insert_sql(name)
     <<-SQL
     INSERT INTO countries
       (created_at, updated_at, name, short, coordinates, aliases)
@@ -50,7 +47,7 @@ class CountryImporter
     SQL
   end
 
-  private def update_aliases(existing : Country)
+  private def build_update_aliases_sql(existing : Country)
     <<-SQL
     UPDATE countries SET aliases = '{#{escaped_aliases(existing.name)}}'::text[] WHERE id = #{existing.id};
     SQL
@@ -60,7 +57,7 @@ class CountryImporter
   # This returns a string surrounded by single quotes so we remove those using
   # lchop and rchop.
   private def escaped_aliases(name)
-    if @aliases[name]
+    unless @aliases[name]?.nil?
       alias_arr = @aliases[name].as_a
     else
       return ""
