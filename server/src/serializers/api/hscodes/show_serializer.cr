@@ -4,6 +4,9 @@ class Api::Hscodes::ShowSerializer < Lucky::Serializer
 
   def render
     {
+      section: @hscode.section!.description,
+      chapter: @hscode.chapter!.description,
+      heading: @hscode.heading!.description,
       code: @hscode.code,
       description: @hscode.description,
       unit: @hscode.unit,
