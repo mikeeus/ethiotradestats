@@ -1,0 +1,35 @@
+header, header nav, header nav ul {
+  display: flex;
+  color: white;
+}
+
+header {
+  background: #222548;
+  align-items: center;
+  padding: 0 15px;
+  height: 56px;
+}
+
+header > a {
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  font-weight: bold;
+}
+
+ul {
+  color: white;
+  list-style: none;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  height: 56px;
+  line-height: 56px;
+  padding: 0 15px;
+}
+
+a:hover, a.active {
+  background: #343648; /* BackgroundColor */
+}
