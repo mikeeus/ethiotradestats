@@ -15,9 +15,9 @@
     "storybook": "^1.0.0"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
+    "start": "react-app-rewired start --scripts-version react-scripts-ts",
+    "build": "react-app-rewired build --scripts-version react-scripts-ts",
+    "test": "react-app-rewired test --env=jsdom --scripts-version react-scripts-ts",
     "eject": "react-scripts-ts eject"
   },
   "devDependencies": {
@@ -25,7 +25,10 @@
     "@types/node": "^10.5.2",
     "@types/react": "^16.4.6",
     "@types/react-dom": "^16.0.6",
+    "@types/react-router-dom": "^4.3.0",
+    "react-app-rewired": "^1.5.2",
     "react-cosmos": "^4.5.0",
+    "ts-import-plugin": "^1.5.4",
     "typescript": "^2.9.2"
   }
 }
