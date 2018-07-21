@@ -6,4 +6,8 @@ class CountryQuery < Country::BaseQuery
       db.query_one? statement, as: Country
     end
   end
+
+  def names
+    map &.name
+  end
 end
