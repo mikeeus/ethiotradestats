@@ -8,7 +8,13 @@ export interface CountryState {
 }
 
 const initialState: CountryState = {
-  allCountries: [],
+  allCountries: [
+    'Canada',
+    'China',
+    'USA',
+    'Germany',
+    'Somalia',
+  ],
   fetchedCountries: [],
   selected: null
 };

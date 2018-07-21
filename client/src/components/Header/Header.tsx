@@ -1,9 +1,12 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
-import { Dropdown } from '@components';
-// import { colors } from '@constants';
 import { AutoComplete, Layout } from 'antd';
+
+// import { colors } from '@constants';
+import { Dropdown } from '@components';
+import { State } from '@store/index';
 
 const AntHeader = Layout.Header;
 
@@ -22,14 +25,6 @@ const AntHeader = Layout.Header;
 //     textDecoration: 'none',
 //   },
 // }
-
-const countries = [
-  'Canada',
-  'China',
-  'USA',
-  'Germany',
-  'Somalia',
-]
 
 const years = [
   { label: '2018', link: '2018' },
@@ -56,8 +51,16 @@ const years = [
   { label: '1997', link: '1997' },
 ];
 
-export const Header = withRouter<RouteComponentProps<{}>>(
-  class MyComponent extends React.Component<RouteComponentProps<{}>, any> {
+const mapStateToProps = (state: State) => ({
+  allCountries: state.countries.allCountries,
+});
+
+interface IProps {
+  allCountries: string[];
+}
+
+const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
+  class extends React.Component<RouteComponentProps<{}> & IProps, any> {
     public onCountrySelect = (value: any, option: any) => {
       this.props.history.push('/country/' + value);
     }
@@ -79,7 +82,7 @@ export const Header = withRouter<RouteComponentProps<{}>>(
           <Link to="/">Ethio Trade Stats</Link>
         </div>
         <AutoComplete
-          dataSource={countries}
+          dataSource={this.props.allCountries}
           onSelect={this.onCountrySelect}
           style={{
             marginRight: '15px',
@@ -107,3 +110,8 @@ export const Header = withRouter<RouteComponentProps<{}>>(
     }
   }
 )
+
+export const Header = connect(
+  mapStateToProps,
+  null
+)(HeaderComponent)
