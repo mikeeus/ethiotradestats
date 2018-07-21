@@ -11,12 +11,12 @@ export const AppRouter: React.StatelessComponent<{}> = () => {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Route path="/" component={App} >
+        <App>
           <Route path="/hscode/:code" component={Hscode}/>
           <Route path="/year/:year" component={Year}/>
           <Route path="/country/:country" component={Country}/>
           <Route exact={true} path="/" component={Home}/>
-        </Route>
+        </App>
       </BrowserRouter>
     </Provider>
   );
