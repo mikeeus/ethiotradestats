@@ -4,7 +4,7 @@ import { Header } from '@components';
 import { colors } from '@constants';
 import { Layout as AntLayout } from 'antd';
 
-import './layout.css';
+import './Layout.css';
 
 const { Content, Footer, Sider } = AntLayout;
 
@@ -27,7 +27,7 @@ export class Layout extends React.Component {
               <Breadcrumb.Item>List</Breadcrumb.Item>
               <Breadcrumb.Item>App</Breadcrumb.Item>
             </Breadcrumb> */}
-            Content
+            {this.props.children}
           </Content>
           <Sider
             style={{

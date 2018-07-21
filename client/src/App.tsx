@@ -1,12 +1,21 @@
 import * as React from 'react';
 import './App.css';
 
+import { Route, Switch } from 'react-router-dom';
+
+import { Country, Home, Hscode, Year } from '@pages';
+
 import { Layout } from '@components';
 class App extends React.Component {
   public render() {
     return (
       <Layout>
-        Content
+        <Switch>
+          <Route path="/hscode/:code" component={Hscode}/>
+          <Route path="/year/:year" component={Year}/>
+          <Route path="/country/:country" component={Country}/>
+          <Route exact={true} path="/" component={Home}/>
+        </Switch>
       </Layout>
     );
   }

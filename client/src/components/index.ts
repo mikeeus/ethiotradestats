@@ -1,4 +1,5 @@
-import { Header } from './header';
-import { Layout } from './layout/layout';
+import { Header } from './Header/Header';
+import { Layout } from './Layout/Layout';
+import { YearSelect } from './YearSelect';
 
-export { Layout, Header }
+export { Layout, Header, YearSelect }
