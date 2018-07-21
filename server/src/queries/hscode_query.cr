@@ -1,6 +1,6 @@
 class HscodeQuery < Hscode::BaseQuery
-  def search(term : String)
-    description.ilike("%#{term}%")
+  def search(query : String)
+    description.ilike("%#{query}%")
   end
 
   def to_json_array

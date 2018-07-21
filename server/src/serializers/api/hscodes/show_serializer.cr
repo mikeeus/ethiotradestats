@@ -1,6 +1,5 @@
-class Hscodes::ShowSerializer
+class Api::Hscodes::ShowSerializer < Lucky::Serializer
   def initialize(@hscode : Hscode)
-
   end
 
   def render
