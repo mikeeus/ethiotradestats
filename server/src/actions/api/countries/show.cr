@@ -3,6 +3,6 @@ class Api::Countries::Show < ApiAction
 
   get "/api/countries/:name" do
     country = CountryQuery.new.name(URI.unescape(name)).first
-    json Countries::ShowSerializer.new country
+    json({ country: Countries::ShowSerializer.new country })
   end
 end

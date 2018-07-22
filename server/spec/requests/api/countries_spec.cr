@@ -21,6 +21,6 @@ describe "Countries" do
     request.get "/api/countries/" + URI.escape(united_states.name)
 
     request.response.status_code.should eq 200
-    request.response_json["name"].should eq united_states.name
+    request.response_json["country"]["name"].should eq united_states.name
   end
 end
