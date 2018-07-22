@@ -54,7 +54,7 @@ class AppRequest
 
   def response_json
     if response_body.empty?
-      ""
+      nil
     else
       JSON.parse(response_body)
     end
