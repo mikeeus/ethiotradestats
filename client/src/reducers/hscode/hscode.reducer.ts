@@ -83,6 +83,15 @@ export const hscodeReducer = (state: HscodeState = initialState, action: HscodeA
       }
     }
 
+    case ActionTypes.SELECT: {
+      const code = action.payload;
+
+      return {
+        ...state,
+        selectedCode: code
+      }
+    }
+
     default:
       return state;
   }

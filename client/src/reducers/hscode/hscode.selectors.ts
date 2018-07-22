@@ -13,8 +13,3 @@ export const getSearchResults = createSelector(
     return [];
   }
 )
-
-export const selectHscode = createSelector(
-  getHscodeState,
-  state => state.selectedCode ? state.entities[state.selectedCode] : null
-)

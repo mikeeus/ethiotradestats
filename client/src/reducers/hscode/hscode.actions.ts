@@ -13,6 +13,8 @@ export enum ActionTypes {
   LOAD = '[Hscode] Load',
   LOAD_SUCCESS = '[Hscode] Load Success',
   LOAD_FAIL = '[Hscode] Load Fail',
+
+  SELECT = '[Hscode] SELECT',
 }
 
 /*
@@ -96,10 +98,22 @@ interface LoadFail {
   type: ActionTypes.LOAD_FAIL,
 }
 
+export const selectHscode = (code: string): Select => ({
+  payload: code,
+  type: ActionTypes.SELECT
+})
+
+interface Select {
+  payload: string,
+  type: ActionTypes.SELECT,
+}
+
 export type HscodeActions =
   | Load
   | LoadSuccess
   | LoadFail
+
+  | Select
 
   | Search
   | SearchSuccess
