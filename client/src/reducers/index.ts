@@ -1,17 +1,17 @@
 import { combineReducers } from 'redux';
 
 import { countryReducer, CountryState } from './country';
-import { searchReducer, SearchState } from './search';
+import { hscodeReducer, HscodeState } from './hscode';
 
 // tslint:disable:interface-name
 export interface State {
   countries: CountryState,
-  search: SearchState,
+  hscodes: HscodeState,
 }
 
 export const state = combineReducers<State>({
   countries: countryReducer,
-  search: searchReducer,
+  hscodes: hscodeReducer,
 })
 
 // const years = [

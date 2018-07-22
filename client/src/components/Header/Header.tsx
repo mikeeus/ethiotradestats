@@ -8,8 +8,8 @@ import { Cancelable, debounce } from 'lodash';
 import { Dropdown, SearchHscodes } from '@components';
 import { Hscode } from '@models';
 import { loadCountryNames } from '@store/country';
+import { getSearchResults, searchHscodes } from '@store/hscode';
 import { State } from '@store/index';
-import { getSearchResults, searchHscodes } from '@store/search';
 
 const AntHeader = Layout.Header;
 
