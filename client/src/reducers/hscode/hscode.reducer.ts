@@ -1,6 +1,7 @@
 import { ActionTypes, HscodeActions } from './hscode.actions';
 
 import { Hscode } from '@models';
+import { entitiesToHash } from '../helpers';
 
 // tslint:disable:interface-name
 export interface HscodeState {
@@ -42,7 +43,10 @@ export const hscodeReducer = (state: HscodeState = initialState, action: HscodeA
       
       return {
         ...state,
-        entities: entitiesToHash<Hscode>(searchResults, 'code'),
+        entities: {
+          ...state.entities,
+          ...entitiesToHash<Hscode>(searchResults, 'code')
+        },
         searchResults: {
           ...state.searchResults,
           [state.query]: searchResults.map((hscode: Hscode) => hscode.code)
@@ -97,18 +101,3 @@ export const hscodeReducer = (state: HscodeState = initialState, action: HscodeA
   }
 };
 
-/**
- * entitiesToHash converts an array of entities into a hash store using
- * a unique key.
- * @param entities an array of entities to turn into a hash store.
- * @param key a unique key to use in the hash
- */
-function entitiesToHash<T>(entities: T[], key: string = 'id'): {[key: string]: T} {
-  const result = {};
-
-  entities.map(entity => {
-    result[entity[key]] = entity;
-  })
-
-  return result;
-}

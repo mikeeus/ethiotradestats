@@ -5,7 +5,7 @@
 
 import axios, { AxiosResponse } from 'axios';
 
-import { Country } from '@models';
+import { AnnualExport, AnnualImport, Country,  } from '@models';
 
 export enum ActionTypes {
   LOAD_NAMES = '[Country] Load Names',
@@ -52,6 +52,12 @@ interface LoadCountryNamesFail {
   type: ActionTypes.LOAD_NAMES_FAIL,
 }
 
+
+interface CountrySuccessResponse {
+  country: Country,
+  annualImports: AnnualImport[],
+  annualExports: AnnualExport[]
+}
 /*
  * Load Country
  */
@@ -59,8 +65,8 @@ export const loadCountry = (name: string) => (dispatch: any) => {
   dispatch(requestCountry);
 
   axios.get('/api/countries/' + name)
-    .then((res: AxiosResponse<{ country: Country }>) => {
-      dispatch(loadCountrySuccess(res.data.country));
+    .then((res: AxiosResponse<CountrySuccessResponse>) => {
+      dispatch(loadCountrySuccess(res.data));
     })
     .catch(err => dispatch(loadCountryFail));
 };
@@ -68,8 +74,8 @@ export const loadCountry = (name: string) => (dispatch: any) => {
 const requestCountry: LoadCountry = {
   type: ActionTypes.LOAD
 }
-const loadCountrySuccess = (country: Country): LoadCountrySuccess => ({
-  payload: country,
+const loadCountrySuccess = (res: CountrySuccessResponse): LoadCountrySuccess => ({
+  payload: res,
   type: ActionTypes.LOAD_SUCCESS,
 });
 const loadCountryFail: LoadCountryFail = {
@@ -80,7 +86,7 @@ interface LoadCountry {
   type: ActionTypes.LOAD,
 }
 interface LoadCountrySuccess {
-  payload: Country,
+  payload: CountrySuccessResponse,
   type: ActionTypes.LOAD_SUCCESS,
 }
 interface LoadCountryFail {

@@ -1,12 +1,12 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
 
-import { loadCountry } from '@store/country';
+import { CountryState, loadCountry } from '@store/country';
 import { State } from '@store/index';
 
-interface IProps {
+interface IProps extends CountryState {
   match: { params: { country: string }},
-  getCountry(country: string): void;
+  loadCountry(country: string): void;
 }
 
 const mapStateToProps = (state: State) => ({
@@ -14,13 +14,13 @@ const mapStateToProps = (state: State) => ({
 });
 
 const mapDispatchToProps = (dispatch: any) => ({
-  getCountry: (country: string) => dispatch(loadCountry(country))
+  loadCountry: (country: string) => dispatch(loadCountry(country))
 })
 
 export class Component extends React.Component<IProps> {
   public componentDidMount() {
-    const { match, getCountry } = this.props;
-    getCountry(match.params.country);
+    const { match } = this.props;
+    this.props.loadCountry(match.params.country);
   }
 
   public render() {
