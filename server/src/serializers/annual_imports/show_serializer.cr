@@ -5,10 +5,10 @@ class AnnualImports::ShowSerializer < Lucky::Serializer
   def render
     {
       year: @annual_imports.year,
-      cif_usd_cents: @annual_imports.cif_usd_cents,
-      cif_etb_cents: @annual_imports.cif_etb_cents,
-      tax_usd_cents: @annual_imports.tax_usd_cents,
-      tax_etb_cents: @annual_imports.tax_etb_cents
+      cifUsdCents: @annual_imports.cif_usd_cents,
+      cifEtbCents: @annual_imports.cif_etb_cents,
+      taxUsdCents: @annual_imports.tax_usd_cents,
+      taxEtbCents: @annual_imports.tax_etb_cents
     }
   end
 end

@@ -8,8 +8,8 @@ class Api::Countries::Show < ApiAction
 
     json({
       country: Countries::ShowSerializer.new(country),
-      annual_imports: AnnualImports::IndexSerializer.new(annual_imports),
-      annual_exports: AnnualExports::IndexSerializer.new(annual_exports)
+      annualImports: AnnualImports::IndexSerializer.new(annual_imports),
+      annualExports: AnnualExports::IndexSerializer.new(annual_exports)
     })
   end
 end
