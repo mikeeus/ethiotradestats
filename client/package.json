@@ -27,6 +27,12 @@
     "test": "react-app-rewired test --env=jsdom --scripts-version react-scripts-ts",
     "eject": "react-scripts-ts eject"
   },
+  "proxy": {
+    "/api": {
+      "target": "http://localhost:5000",
+      "secure": false
+    }
+  },
   "devDependencies": {
     "@types/jest": "^23.3.0",
     "@types/node": "^10.5.2",
