@@ -4,14 +4,12 @@ import { Hscode } from '@models';
 
 // tslint:disable:interface-name
 export interface SearchState {
-  cancel: any,
   loading: boolean,
   query: string,
   results: { [key: string]: Hscode[] },
 }
 
 export const initialState: SearchState = {
-  cancel: null,
   loading: false,
   query: '',
   results: {},
@@ -20,15 +18,10 @@ export const initialState: SearchState = {
 export const searchReducer = (state: SearchState = initialState, action: SearchActions): SearchState => {
   switch (action.type) {
     case ActionTypes.SEARCH_HSCODES: {
-      const { query, cancel } = action.payload;
-
-      if (state.cancel) {
-        state.cancel();
-      }
+      const query = action.payload;
 
       return {
         ...state,
-        cancel,
         loading: true,
         query,
       }

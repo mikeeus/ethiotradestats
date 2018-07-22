@@ -19,23 +19,18 @@ export const searchHscodes = (query: string) => (dispatch: any) => {
     return;
   }
 
-  const CancelToken = axios.CancelToken;
-  let cancel;
-
-  dispatch(requestHscodesSearch(query, cancel));
+  dispatch(requestHscodesSearch(query));
 
   axios
-    .get('/api/hscodes/search/' + encodeURIComponent(query), {
-      cancelToken: new CancelToken((c) => cancel = c)
-    })
+    .get('/api/hscodes/search/' + encodeURIComponent(query))
     .then((res: AxiosResponse<Hscode[]>) => {
       dispatch(searchHscodesSuccess(res.data));
     })
     .catch(err => dispatch(searchHscodesFail));
 };
 
-const requestHscodesSearch = (query: string, cancel: any): SearchHscodes => ({
-  payload: { query, cancel },
+const requestHscodesSearch = (query: string): SearchHscodes => ({
+  payload: query,
   type: ActionTypes.SEARCH_HSCODES,
 });
 const searchHscodesSuccess = (hscodes: Hscode[]): SearchHscodesSuccess => ({
@@ -47,7 +42,7 @@ const searchHscodesFail: SearchHscodesFail = {
 };
 
 interface SearchHscodes {
-  payload: { query: string, cancel: any },
+  payload: string,
   type: ActionTypes.SEARCH_HSCODES,
 }
 interface SearchHscodesSuccess {
