@@ -6,6 +6,7 @@ import { AutoComplete, Layout } from 'antd';
 
 // import { colors } from '@constants';
 import { Dropdown } from '@components';
+import { loadCountryNames } from '@store/country';
 import { State } from '@store/index';
 
 const AntHeader = Layout.Header;
@@ -53,16 +54,27 @@ const years = [
 
 const mapStateToProps = (state: State) => ({
   allCountries: state.countries.allCountries,
+  loadingNames: state.countries.loadingNames,
+});
+
+const mapPropsToDispatch = (dispatch: any) => ({
+  loadCountryNames: () => dispatch(loadCountryNames())
 });
 
 interface IProps {
   allCountries: string[];
+  loadingNames: boolean;
+  loadCountryNames(): void;
 }
 
 const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
   class extends React.Component<RouteComponentProps<{}> & IProps, any> {
     public onCountrySelect = (value: any, option: any) => {
       this.props.history.push('/country/' + value);
+    }
+
+    public componentDidMount() {
+      this.props.loadCountryNames();
     }
 
     public render() {
@@ -84,10 +96,12 @@ const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
         <AutoComplete
           dataSource={this.props.allCountries}
           onSelect={this.onCountrySelect}
+          placeholder="Select Country"
           style={{
             marginRight: '15px',
-            width: '300px',
+            width: '200px',
           }}
+          filterOption={true}
         />
         <Dropdown label="Select Year" options={years} urlPrefix="/year"/>
         {/* <NavLink to="/trade"
@@ -113,5 +127,5 @@ const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
 
 export const Header = connect(
   mapStateToProps,
-  null
+  mapPropsToDispatch
 )(HeaderComponent)
