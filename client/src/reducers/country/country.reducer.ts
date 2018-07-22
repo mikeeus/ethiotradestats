@@ -8,8 +8,8 @@ export interface CountryState {
   allCountries: string[];
   annualSummaries: {
     [key: string]: {
-      annual_imports: AnnualImport[];
-      annual_exports: AnnualExport[];
+      annualImports: AnnualImport[];
+      annualExports: AnnualExport[];
     }
   };
   entities: { [key: string]: Country };
@@ -48,14 +48,14 @@ export const countryReducer = (state: CountryState = initialState, action: Count
         ...state,
         annualSummaries: {
           ...state.annualSummaries,
-          [country.id]: {
+          [country.name]: {
             annualExports,
             annualImports,
           }
         },
         entities: {
           ...state.entities,
-          [country.id]: country,
+          [country.name]: country,
         },
         loading: false
       }
