@@ -5,9 +5,10 @@ export const getSearchState = (state: State) => state.search;
 
 export const getSearchResults = createSelector(
   getSearchState,
-  ({ query, results }) => {
+  ({ query, results, entities }) => {
     if (query && results[query]) {
-      return results[query];
+      const ids = results[query];
+      return ids.map(id => entities[id]);
     }
     return [];
   }
