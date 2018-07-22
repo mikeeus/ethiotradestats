@@ -99,6 +99,10 @@ const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
           onSearch={this.props.searchHscodes}
           onSelect={this.selectHscode}
           results={this.props.searchResults}
+          style={{
+            marginRight: '15px',
+            width: '300px',
+          }}
         />
 
         <AutoComplete
@@ -107,7 +111,7 @@ const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
           placeholder="Select Country"
           style={{
             marginRight: '15px',
-            width: '200px',
+            width: '150px',
           }}
           filterOption={true}
         />
