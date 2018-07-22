@@ -4,41 +4,55 @@ import { Hscode } from '@models';
 
 // tslint:disable:interface-name
 export interface SearchState {
-  term: string,
-  results: Hscode[],
+  cancel: any,
   loading: boolean,
+  query: string,
+  results: { [key: string]: Hscode[] },
 }
 
 export const initialState: SearchState = {
+  cancel: null,
   loading: false,
-  results: [],
-  term: '',
+  query: '',
+  results: {},
 };
 
-export const searchReducer = (state: SearchState = initialState, action: SearchActions) => {
+export const searchReducer = (state: SearchState = initialState, action: SearchActions): SearchState => {
   switch (action.type) {
-    case ActionTypes.SEARCH: {
+    case ActionTypes.SEARCH_HSCODES: {
+      const { query, cancel } = action.payload;
+
+      if (state.cancel) {
+        state.cancel();
+      }
+
       return {
         ...state,
-        loading: true
+        cancel,
+        loading: true,
+        query,
       }
     }
-    case ActionTypes.SEARCH_SUCCESS: {
+    case ActionTypes.SEARCH_HSCODES_SUCCESS: {
       const results = action.payload;
 
       return {
         ...state,
         loading: false,
-        results,
+        results: {
+          ...state.results,
+          [state.query]: results
+        },
       }
     }
-    case ActionTypes.SEARCH_FAIL: {
+    case ActionTypes.SEARCH_HSCODES_FAIL: {
       return {
         ...state,
         loading: false
       }
     }
-  }
 
-  return state;
+    default:
+      return state;
+  }
 };

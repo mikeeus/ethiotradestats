@@ -3,29 +3,15 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import { AutoComplete, Layout } from 'antd';
+import { Cancelable, debounce } from 'lodash';
 
-// import { colors } from '@constants';
-import { Dropdown } from '@components';
+import { Dropdown, SearchHscodes } from '@components';
+import { Hscode } from '@models';
 import { loadCountryNames } from '@store/country';
 import { State } from '@store/index';
+import { getSearchResults, searchHscodes } from '@store/search';
 
 const AntHeader = Layout.Header;
-
-// const styles = {
-//   activeHeaderLink: {
-//     background: colors.secondary,
-//   },
-//   headerLink: {
-//     color: 'white',
-//     display: 'inline-block',
-//     fontSize: 13,
-//     fontWeight: 400,
-//     height: 64,
-//     lineHeight: '64px',
-//     padding: '0 15px',
-//     textDecoration: 'none',
-//   },
-// }
 
 const years = [
   { label: '2018', link: '2018' },
@@ -54,24 +40,39 @@ const years = [
 
 const mapStateToProps = (state: State) => ({
   allCountries: state.countries.allCountries,
-  loadingNames: state.countries.loadingNames,
+  searchResults: getSearchResults(state),
 });
 
 const mapPropsToDispatch = (dispatch: any) => ({
-  loadCountryNames: () => dispatch(loadCountryNames())
+  loadCountryNames: () => dispatch(loadCountryNames()),
+  searchHscodes: debounce(
+    (query: string) => dispatch(searchHscodes(query)),
+    500
+  )
 });
 
 interface IProps {
   allCountries: string[];
-  loadingNames: boolean;
+  searchResults: Hscode[];
+  searchHscodes: ((query: string) => any) & Cancelable;
   loadCountryNames(): void;
 }
 
 const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
   class extends React.Component<RouteComponentProps<{}> & IProps, any> {
-    public onCountrySelect = (value: any, option: any) => {
+    public onCountrySelect = (value: any, _: any) => {
       this.props.history.push('/country/' + value);
     }
+
+    public selectHscode = (code: string, _:any) => {
+      this.props.history.push('/hscode/' + code);
+    }
+
+    public searchHscodes = (query: string) => {
+      if (query.length > 2) {
+        this.props.searchHscodes(query);
+      }
+    }  
 
     public componentDidMount() {
       this.props.loadCountryNames();
@@ -93,6 +94,13 @@ const HeaderComponent = withRouter<RouteComponentProps<{}> & IProps>(
         }}>
           <Link to="/">Ethio Trade Stats</Link>
         </div>
+        
+        <SearchHscodes
+          onSearch={this.props.searchHscodes}
+          onSelect={this.selectHscode}
+          results={this.props.searchResults}
+        />
+
         <AutoComplete
           dataSource={this.props.allCountries}
           onSelect={this.onCountrySelect}
