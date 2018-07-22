@@ -53,11 +53,7 @@ class AppRequest
   end
 
   def response_json
-    if response_body.empty?
-      nil
-    else
-      JSON.parse(response_body)
-    end
+    JSON.parse(response_body)
   end
 
   private def request(method :  String, path : String, body : Hash(String, String)? = nil, headers : HTTP::Headers? = nil)

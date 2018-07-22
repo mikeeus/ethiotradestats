@@ -9,7 +9,7 @@ describe "Hscodes" do
     request.get "/api/hscodes/search/" + URI.escape("live horses")
 
     request.response.status_code.should eq 200
-    request.response_json.not_nil![0]["code"].should eq live_horses.code
+    request.response_json[0]["code"].should eq live_horses.code
   end
 
   it "gets hscode by code" do
@@ -20,7 +20,7 @@ describe "Hscodes" do
     request.get "/api/hscodes/" + live_horses.code
 
     request.response.status_code.should eq 200
-    request.response_json.not_nil!["code"].should eq live_horses.code
+    request.response_json["code"].should eq live_horses.code
   end
 end
 
