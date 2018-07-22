@@ -1,4 +1,4 @@
-class Countries::ShowSerializer < Lucky::Serializer
+class Api::Countries::ShowSerializer < Lucky::Serializer
   def initialize(@country : Country)
   end
 
