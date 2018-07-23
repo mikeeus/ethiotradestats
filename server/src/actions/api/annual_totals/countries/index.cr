@@ -1,7 +1,7 @@
 class Api::AnnualTotals::Countries::Index < ApiAction
   include Auth::SkipRequireSignIn
 
-  get "/api/countries/annual_totals" do
+  get "/api/annual_totals/countries" do
     annual_totals = CountryQuery.new.annual_totals_by_country
 
     json ({
