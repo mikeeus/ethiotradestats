@@ -63,7 +63,7 @@ export const countryReducer = (state: CountryState = initialState, action: Count
     case ActionTypes.LOAD_FAIL: {
       return {
         ...state,
-        loading: true
+        loading: false
       }
     }
 
