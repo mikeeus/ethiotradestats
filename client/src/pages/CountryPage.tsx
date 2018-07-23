@@ -3,15 +3,17 @@ import { connect } from 'react-redux';
 
 import { RouterState } from 'connected-react-router';
 
+import { BasicChart } from '@components';
 import { Country } from '@models';
 import { CountryState, loadCountry } from '@store/country';
 import { State } from '@store/index';
 
-import { dispatchIfChanged } from '../helpers';
+import { dispatchIfChanged } from './helpers';
 
 interface IProps extends CountryState {
   match: { params: { country: string }};
   country: Country;
+  annualSummary: any;
   loadCountry(country: string): void;
 }
 
@@ -45,6 +47,9 @@ export class Component extends React.Component<IProps> {
     return (
       <div>
         Country: { this.props.country && this.props.country.name }
+        {
+          this.props.annualSummary ? <BasicChart data={this.props.annualSummary}/> : null
+        }
       </div>
     )
   }

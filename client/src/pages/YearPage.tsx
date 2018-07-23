@@ -4,7 +4,7 @@ interface IProps {
   match: { params: { year: number }}
 }
 
-export class Year extends React.Component<IProps> {
+export class YearPage extends React.Component<IProps> {
   public render() {
     const { match } = this.props;
 
@@ -15,5 +15,3 @@ export class Year extends React.Component<IProps> {
     )
   }
 }
-
-export default Year

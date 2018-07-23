@@ -57,7 +57,7 @@ export class Component extends React.Component<IProps> {
   }
 }
 
-export const Hscode = connect(
+export const HscodePage = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Component)

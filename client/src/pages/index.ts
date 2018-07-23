@@ -1,6 +1,6 @@
-import { CountryPage } from './country/country';
-import { HomePage } from './home/home';
-import { Hscode } from './hscode/hscode';
-import { Year } from './year/year';
+import { CountryPage } from './CountryPage';
+import { HomePage } from './HomePage';
+import { HscodePage } from './HscodePage';
+import { YearPage } from './YearPage';
 
-export { CountryPage, HomePage, Hscode, Year }
+export { CountryPage, HomePage, HscodePage, YearPage }
