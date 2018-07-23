@@ -96,7 +96,7 @@ class CountryQuery < Country::BaseQuery
         export.total_cents as total_exports_cents,
         export.tax_cents as total_export_tax_cents
       FROM import
-      JOIN (
+      LEFT JOIN (
         SELECT
           countries.name,
           countries.short,
