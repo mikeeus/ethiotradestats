@@ -1,40 +1,37 @@
 import * as React from 'react'
 
 import { Header } from '@components';
-import { colors } from '@constants';
 import { Layout as AntLayout } from 'antd';
+// import { colors } from '@shared';
 
 import './Layout.css';
 
-const { Content, Footer, Sider } = AntLayout;
+const { Content, Footer } = AntLayout;
 
 export class Layout extends React.Component {
   public render() {
     return (
-      <AntLayout className="layout"
-        style={{
-          background: colors.primary,
-        }}>
+      <AntLayout id="layout">
         <Header/>
         <AntLayout>
-          <Content style={{
-            background: colors.secondary,
-            minHeight: '100vh',
-            padding: '0 50px',
-          }}>
-            {/* <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>Home</Breadcrumb.Item>
-              <Breadcrumb.Item>List</Breadcrumb.Item>
-              <Breadcrumb.Item>App</Breadcrumb.Item>
-            </Breadcrumb> */}
-            {this.props.children}
+          <Content
+            className="layout-content"
+            style={{
+              backgroundImage: ' linear-gradient(to right bottom, rgb(0, 21, 41), #20204e',
+              minHeight: '100vh',
+            }}
+          >
+            <div className="content-wrapper">
+              {this.props.children}
+            </div>
           </Content>
-          <Sider
+
+          {/* <Sider
             style={{
               background: colors.secondary,
             }}>
             Sider
-          </Sider>
+          </Sider> */}
         </AntLayout>
         <Footer style={{ textAlign: 'center' }}>
           Ethio Trade Stats ©2016 Created by <a href="https://mikias.net">Mikias Abera</a>
@@ -43,5 +40,3 @@ export class Layout extends React.Component {
     )
   }
 }
-
-export default Layout

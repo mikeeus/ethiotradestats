@@ -1,16 +1,12 @@
 import { ActionTypes, CountryActions } from './country.actions';
 
-import { Country } from '@models';
-import { AnnualExport, AnnualImport } from '@models';
+import { AnnualCountryTotal, Country } from '@models';
 
 // tslint:disable:interface-name
 export interface CountryState {
   allCountries: string[];
-  annualSummaries: {
-    [key: string]: {
-      annualImports: AnnualImport[];
-      annualExports: AnnualExport[];
-    }
+  annualTotals: {
+    [key: string]: AnnualCountryTotal
   };
   entities: { [key: string]: Country };
   loading: boolean;
@@ -26,7 +22,7 @@ const initialState: CountryState = {
     'Germany',
     'Somalia',
   ],
-  annualSummaries: {},
+  annualTotals: {},
   entities: {},
   loading: false,
   loadingNames: false,
@@ -42,16 +38,13 @@ export const countryReducer = (state: CountryState = initialState, action: Count
       }
     }
     case ActionTypes.LOAD_SUCCESS: {
-      const { country, annualExports, annualImports } = action.payload;
+      const { country, annualTotal } = action.payload;
 
       return {
         ...state,
-        annualSummaries: {
-          ...state.annualSummaries,
-          [country.name]: {
-            annualExports,
-            annualImports,
-          }
+        annualTotals: {
+          ...state.annualTotals,
+          [country.name]: annualTotal
         },
         entities: {
           ...state.entities,

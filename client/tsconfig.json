@@ -27,8 +27,8 @@
       "@pages": [
         "src/pages/index.ts"
       ],
-      "@constants": [
-        "src/constants.ts"
+      "@shared": [
+        "src/shared.tsx"
       ],
       "@store/*": [
         "src/reducers/*"

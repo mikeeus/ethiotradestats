@@ -51,6 +51,22 @@
        url('./fonts/poppins/poppins-v5-latin-900.svg#Poppins') format('svg'); /* Legacy iOS */
 }
 
-html, body {
+/* html, body {
   font-family: Poppins, Roboto, Helvetica, sans-serif !important;
+} */
+
+@media (max-width: 600px) {
+  .layout-content {
+    padding: 15px;
+  }
+}
+
+@media (min-width: 601px) {
+  .layout-content {
+    padding: 15px 50px;
+  }
+  .layout-content .content-wrapper {
+    max-width: 1200px;
+    margin: auto;
+  }
 }

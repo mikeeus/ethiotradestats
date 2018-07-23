@@ -5,7 +5,7 @@
 
 import axios, { AxiosResponse } from 'axios';
 
-import { AnnualExport, AnnualImport, Country,  } from '@models';
+import { AnnualCountryTotal, Country } from '@models';
 
 export enum ActionTypes {
   LOAD_NAMES = '[Country] Load Names',
@@ -55,8 +55,7 @@ interface LoadCountryNamesFail {
 
 interface CountrySuccessResponse {
   country: Country,
-  annualImports: AnnualImport[],
-  annualExports: AnnualExport[]
+  annualTotal: AnnualCountryTotal
 }
 /*
  * Load Country

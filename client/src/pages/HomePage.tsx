@@ -5,6 +5,8 @@ import { AnnualCountryTotal } from '@models';
 import { loadAnnualTotals } from '@store/home';
 import { State } from '@store/index';
 
+import { BasicMap } from '@components';
+
 interface IProps {
   match: { params: { year: number }};
   annualTotals: { [key: string]: AnnualCountryTotal }
@@ -36,7 +38,7 @@ export class Home extends React.Component<IProps> {
   public render() {
     return (
       <div>
-        Homepage!
+        <BasicMap />
       </div>
     )
   }

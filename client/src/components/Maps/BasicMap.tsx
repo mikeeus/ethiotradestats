@@ -41,7 +41,7 @@ export class BasicMap extends React.Component {
           }}
           >
           <ZoomableGroup center={[0,20]}>
-            <Geographies geography={ "/world-110m.json" }>
+            <Geographies geography={ "/world-countries.json" }>
               {(geographies: any, projection: any) => geographies.map((geography: any, i: any) => (
                 <Geography
                   key={ i }
