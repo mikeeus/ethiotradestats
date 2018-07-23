@@ -11,7 +11,7 @@ class Api::Countries::Show < ApiAction
 
       json ({
         country: Countries::ShowSerializer.new(country),
-        annualTotals: AnnualTotalByCountry::IndexSerializer.new(annual_totals),
+        annualTotal: AnnualTotalByCountry::IndexSerializer.new(annual_totals),
       })
     end
   end

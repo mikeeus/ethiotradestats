@@ -9,7 +9,7 @@ class Api::AnnualTotals::Countries::Show < ApiAction
       annual_totals = CountryQuery.new.annual_totals_by_country(country.id)
 
       json ({
-        annualTotals: AnnualTotalByCountry::IndexSerializer.new(annual_totals),
+        annualTotal: AnnualTotalByCountry::IndexSerializer.new(annual_totals),
       })
     end
   end

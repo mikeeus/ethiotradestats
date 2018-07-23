@@ -32,84 +32,86 @@ class CountryQuery < Country::BaseQuery
     end
   end
 
-  private def annual_imports_sql(id : Int32)
+  private def annual_imports_sql(id : Int32? = nil)
+    where_clause = id ? "WHERE countries.id = #{id}" : ""
+
     <<-SQL
       SELECT
         imports.year as year,
         COALESCE(sum(imports.cif_usd_cents), 0)::bigint as cif_usd_cents,
-        COALESCE(sum(imports.cif_etb_cents), 0)::bigint as cif_etb_cents,
-        COALESCE(sum(imports.tax_usd_cents), 0)::bigint as tax_usd_cents,
-        COALESCE(sum(imports.tax_etb_cents), 0)::bigint as tax_etb_cents
+        COALESCE(sum(imports.tax_usd_cents), 0)::bigint as tax_usd_cents
       FROM countries
       JOIN imports
         ON imports.origin_id = countries.id
-      WHERE countries.id = #{id}
-      GROUP BY countries.id, imports.year;
+      #{where_clause}
+      GROUP BY countries.id, imports.year
+      ORDER BY year;
     SQL
   end
 
   private def annual_exports_sql(id : Int32)
+    where_clause = id ? "WHERE countries.id = #{id}" : ""
+
     <<-SQL
       SELECT
         exports.year as year,
         COALESCE(sum(exports.fob_usd_cents), 0)::bigint as fob_usd_cents,
-        COALESCE(sum(exports.fob_etb_cents), 0)::bigint as fob_etb_cents,
-        COALESCE(sum(exports.tax_usd_cents), 0)::bigint as tax_usd_cents,
-        COALESCE(sum(exports.tax_etb_cents), 0)::bigint as tax_etb_cents
+        COALESCE(sum(exports.tax_usd_cents), 0)::bigint as tax_usd_cents
       FROM countries
       JOIN exports
         ON exports.destination_id = countries.id
-      WHERE countries.id = #{id}
-      GROUP BY countries.id, exports.year;
+      #{where_clause}
+      GROUP BY countries.id, exports.year
+      ORDER BY year;
     SQL
   end
 
   private def annual_totals_by_country_sql(id : Int32? = nil, year : Int32? = nil)
-    where_clause = nil
-
     if id
       where_clause = "WHERE countries.id = #{id}"
     elsif year
       where_clause = "WHERE year = #{year}"
+    else
+      where_clause = nil
     end
 
     <<-SQL
-      WITH import as (
+    SELECT
+      merged.name,
+      merged.short,
+      merged.year,
+      COALESCE(sum(merged.total_imports_cents))::bigint as total_imports_cents,
+      COALESCE(sum(merged.total_exports_cents))::bigint as total_exports_cents
+    FROM (
+      (
         SELECT
           countries.name,
           countries.short,
           imports.year,
-          COALESCE(sum(cif_usd_cents), 0)::bigint as total_cents,
-          COALESCE(sum(tax_usd_cents), 0)::bigint as tax_cents
+          COALESCE(sum(cif_usd_cents), 0)::bigint as total_imports_cents,
+          0 as total_exports_cents
         FROM imports
         JOIN countries
           ON imports.origin_id = countries.id
         #{where_clause}
         GROUP BY countries.id, imports.year
       )
-      SELECT
-        import.name,
-        import.short,
-        import.year,
-        COALESCE(import.total_cents, 0)::bigint as total_imports_cents,
-        COALESCE(import.tax_cents, 0)::bigint as total_import_tax_cents,
-        COALESCE(export.total_cents, 0)::bigint as total_exports_cents,
-        COALESCE(export.tax_cents, 0)::bigint as total_export_tax_cents
-      FROM import
-      LEFT JOIN (
-        SELECT
+      UNION
+      ( SELECT
           countries.name,
           countries.short,
           exports.year,
-          COALESCE(sum(fob_usd_cents), 0)::bigint as total_cents,
-          COALESCE(sum(tax_usd_cents), 0)::bigint as tax_cents
+          0 as total_imports_cents,
+          COALESCE(sum(fob_usd_cents), 0)::bigint as total_exports_cents
         FROM exports
         JOIN countries
           ON exports.destination_id = countries.id
         #{where_clause}
         GROUP BY countries.id, exports.year
-      ) export
-      ON import.year = export.year AND import.short = export.short;
+      )
+    ) merged
+    GROUP BY name, short, year
+    ORDER BY name;
     SQL
   end
 end
