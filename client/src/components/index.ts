@@ -1,8 +1,9 @@
 import { Dropdown } from './Dropdown';
 import { Header } from './Header/Header';
 import { Layout } from './Layout/Layout';
-import { BasicMap } from './Maps/BasicMap';
 import { SearchHscodes } from './SearchHscodes';
 
+import { BasicChart } from './Charts/BasicChart';
+import { BasicMap } from './Maps/BasicMap';
 
-export { BasicMap, Layout, Header, Dropdown, SearchHscodes }
+export { BasicChart, BasicMap, Layout, Header, Dropdown, SearchHscodes }
