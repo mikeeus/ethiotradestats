@@ -91,10 +91,10 @@ class CountryQuery < Country::BaseQuery
         import.name,
         import.short,
         import.year,
-        import.total_cents as total_imports_cents,
-        import.tax_cents as total_import_tax_cents,
-        export.total_cents as total_exports_cents,
-        export.tax_cents as total_export_tax_cents
+        COALESCE(import.total_cents, 0)::bigint as total_imports_cents,
+        COALESCE(import.tax_cents, 0)::bigint as total_import_tax_cents,
+        COALESCE(export.total_cents, 0)::bigint as total_exports_cents,
+        COALESCE(export.tax_cents, 0)::bigint as total_export_tax_cents
       FROM import
       LEFT JOIN (
         SELECT
